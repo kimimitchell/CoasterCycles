@@ -54,9 +54,9 @@ class AccountMove(models.Model):
         landed_costs = self.env['stock.landed.cost'].create({
             'vendor_bill_id': self.id,
             'cost_lines': [(0, 0, {
-                'product_id': 1914,
+                'product_id': extra_cost_product.id,
                 'name': extra_cost_product.name,
-                'account_id': extra_cost_product.product_tmpl_id.get_product_accounts()['stock_input'].id,
+                'account_id': extra_cost_product.get_product_accounts()['stock_input'].id,
                 'price_unit': l.difference_unit_price * l.quantity,
                 'split_method': l.product_id.split_method_landed_cost or 'equal',
             }) for l in landed_costs_lines],
