@@ -49,7 +49,7 @@ class AccountMove(models.Model):
     def action_apply_inventory_values(self):
         self.ensure_one()
         landed_costs_lines = self.inventory_compare_line_ids.filtered(lambda line: line.difference_unit_price != 0)
-        extra_cost_product = self.env['product.template'].search([('id', '=', 1914)])
+        extra_cost_product = self.env['product.template'].search([('id', '=', 1914)], limit=1)
 
         landed_costs = self.env['stock.landed.cost'].create({
             'vendor_bill_id': self.id,
