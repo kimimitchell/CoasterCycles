@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 
+import logging
 from odoo import api, fields, models
+
+_logger = logging.getLogger(__name__)
 
 
 class AccountMove(models.Model):
@@ -50,6 +53,7 @@ class AccountMove(models.Model):
         self.ensure_one()
         landed_costs_lines = self.inventory_compare_line_ids.filtered(lambda line: line.difference_unit_price != 0)
         extra_cost_product = self.env['product.template'].search([('default_code', '=', 'AUTO_LC')], limit=1)
+        _logger.debug('Extra cost product is %s', extra_cost_product)
 
         landed_costs = self.env['stock.landed.cost'].create({
             'vendor_bill_id': self.id,
